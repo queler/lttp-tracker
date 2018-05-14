@@ -1184,17 +1184,17 @@ dungeons[7] = {
     },
     isBeatable: function () {
         const availability = new Availability();
-        if (canMeltThings() && canLiftRocks()) {
-            if (this.canEnter('glitchless', false, false) && trackerData.items.hammer) {
+        if (canMeltThings() && canLiftRocks() && trackerData.items.hammer) {
+            if (this.canEnter('glitchless', false, false) ) {
                 if (trackerData.items.hookshot && trackerData.items.somaria) {
                     availability.glitchless = 'available';
                 }
                 else {
-                    availability.glitchless = 'possible';
+                    availability.glitchless = 'glitchavailable';
                 }
             }
             else if (this.canEnter('glitchless', false, true)) {
-                availability.glitchless = 'glitchavailable';
+                availability.glitchless = 'glitchpossible';
             }
             if (this.canEnter('owGlitches', false, false) && trackerData.items.hammer) {
                 if (trackerData.items.hookshot && trackerData.items.somaria) {
@@ -1779,19 +1779,14 @@ dungeons[9] = {
                     availability.glitchless = 'available';
                 }
                 else {
-                    availability.glitchless = 'possible';
+                    availability.glitchless = 'glitchavailable';
                 }
             }
             else if (this.mayEnter('glitchless', false)) {
                 availability.glitchless = 'possible';
             }
             else if (this.canEnter('glitchless', true)) {
-                if (trackerData.items.cape || trackerData.items.byrna || canBlockLasers()) {
-                    availability.glitchless = 'glitchavailable';
-                }
-                else {
-                    availability.glitchless = 'glitchpossible';
-                }
+                availability.glitchless = 'glitchavailable';
             }
             else if (this.mayEnter('glitchless', true)) {
                 availability.glitchless = 'glitchpossible';
@@ -2599,18 +2594,12 @@ chests[13] = {
     isOpened: false,
     isAvailable: function () {
         const availability = new Availability();
-        if (canLiftRocks() && trackerData.items.hammer) {
-            if (canEnterWestDeathMountain('glitchless', true) && trackerData.items.moonpearl) {
-                if (canExtendMagic() && (trackerData.items.cape || trackerData.items.byrna)) {
-                    if (canEnterWestDeathMountain('glitchless', false)) {
-                        availability.glitchless = 'available';
-                    }
-                    else {
-                        availability.glitchless = 'glitchavailable';
-                    }
-                }
-                else {
-                    availability.glitchless = 'glitchpossible';
+        if (canLiftRocks() && trackerData.items.hammer && trackerData.items.moonpearl) {
+            if (canEnterWestDeathMountain('glitchless', true) ) {
+                if (canEnterWestDeathMountain('glitchless', false) && canExtendMagic() && (trackerData.items.cape || trackerData.items.byrna)) {
+                    availability.glitchless = 'available';
+                } else {
+                    availability.glitchless = 'glitchavailable';
                 }
             }
             if (canEnterWestDeathMountain('owGlitches', true) && trackerData.items.moonpearl) {
