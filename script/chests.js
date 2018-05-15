@@ -3270,6 +3270,7 @@ chests[34] = {
     }
 };
 
+witchChest = 35; //used for fake powder logic (you lose mushroom at witch)
 chests[35] = {
     name: "Witch: Give her <img src='images/mushroom.png' class='mini'>",
     x: "40.8%",
@@ -4028,7 +4029,7 @@ chests[59] = {
             if (trackerData.items.powder) {
                 availability.glitchless = 'available';
             }
-            else if (trackerData.items.somaria && trackerData.items.mushroom) {
+            else if (trackerData.items.somaria && trackerData.items.mushroom && !trackerData.chestsopened[witchChest]) {
                 availability.glitchless = 'glitchavailable';
             }
         }
