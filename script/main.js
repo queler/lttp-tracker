@@ -27,13 +27,19 @@ var trackerData = {
 function setCookie(obj) {
     window.localStorage.setItem(roomid, JSON.stringify(obj));
 }
-
+function setTrackerCookie() {
+    window.localStorage.setItem(trackerid, JSON.stringify(vm.trackerData));
+}
 function getCookie() {
     var str = window.localStorage.getItem(roomid);
     if(!str) return {};
     return JSON.parse(str);
 }
-
+function getTrackerCookie() {
+    var str = window.localStorage.getItem(trackerid);
+    if(!str) return {};
+    return JSON.parse(str);
+}
 var cookiekeys = ['ts', 'map', 'iZoom', 'mZoom', 'mOrien', 'mPos', 'mapLogic', 'openmode', 'chest', 'prize', 'medal', 'label', 'items'];
 var cookieDefault = {
     ts:94,
@@ -536,8 +542,9 @@ function initTracker() {
     //createItemTracker(document.getElementById('itemdiv'));
     populateMapdiv();
     populateItemconfig();
-
     loadCookie();
+    var itemsFromLS=getTrackerCookie();
+    vm.trackerData=itemsFromLS;
     updateAll();
 }
 
@@ -545,6 +552,7 @@ function updateAll() {
     if(trackerData.items && trackerData.dungeonchests && trackerData.dungeonbeaten && trackerData.prizes && trackerData.medallions && trackerData.chestsopened) {
       vm.displayVueMap = true;
       refreshMap();
+      setTrackerCookie();
     }
 }
 
