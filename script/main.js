@@ -10,6 +10,7 @@ var trackerOptions = {
   selected: {}
 };
 
+console.info("trackeroptions inited");
 var chestsopenedInit = [];
 for(var i = 0; i < chests.length; i++) {
     chestsopenedInit.push(false);
@@ -23,7 +24,22 @@ var trackerData = {
   medallions: medallionsInit,
   chestsopened: chestsopenedInit
 };
-
+console.log("trackerdata inited");
+var cookieObj=getTrackerCookie();
+copyObjs(trackerData,cookieObj);
+function copyObjs(oldVals, newVals){
+    var keys=Object.keys(oldVals);
+    for(var keyI=0;keyI<keys.length;keyI++){
+      if(newVals!= null && newVals[keys[keyI]]!=null && Object.keys(oldVals[keys[keyI]]).length>0 && Object.keys(newVals[keys[keyI]]).length>0){
+        copyObjs(oldVals[keys[keyI]],newVals[keys[keyI]])
+      }else{
+          if(!(newVals[keys[keyI]]===undefined)){
+            oldVals[keys[keyI]]=newVals[keys[keyI]];
+          }
+      }  
+    
+    }
+}
 function setCookie(obj) {
     window.localStorage.setItem(roomid, JSON.stringify(obj));
 }
@@ -540,11 +556,10 @@ function useTourneyConfig() {
 
 function initTracker() {
     //createItemTracker(document.getElementById('itemdiv'));
+   console.info("start initTracker");
     populateMapdiv();
     populateItemconfig();
     loadCookie();
-    var itemsFromLS=getTrackerCookie();
-    vm.trackerData=itemsFromLS;
     updateAll();
 }
 
@@ -562,7 +577,7 @@ function confirmSaveConfigToFirebase() {
         saveConfigToFirebase();
     }
 }
-
+console.info("before vue tracker-table");
 Vue.component('tracker-table', {
   template: '#tracker-table',
   props: [
@@ -596,7 +611,7 @@ Vue.component('tracker-table', {
     }
   }
 });
-
+console.info("before tracker-cell");
 Vue.component('tracker-cell', {
   template: '#tracker-cell',
   props: [
@@ -731,7 +746,7 @@ Vue.component('tracker-cell', {
     },
   }
 });
-
+console.info("before new vue");
 var vm = new Vue({
   data:{
       itemRows: [],
